@@ -1,1 +1,15 @@
-<p>categories works!</p>
+<section class="container py-5">
+  <h2 class="text-main fw-bold mb-4">All Categories</h2>
+  <div class="row g-4">
+    @for (cat of (categories$ | async); track cat._id) {
+      <div class="col-md-4 col-sm-6">
+        <div class="product p-3 text-center h-100">
+          <img [src]="cat.image" [alt]="cat.name" class="w-100 object-fit-cover rounded" height="280" />
+          <h3 class="h5 fw-bold text-main mt-3 mb-0">{{ cat.name }}</h3>
+        </div>
+      </div>
+    } @empty {
+      <div class="col-12 text-muted">Loading categories...</div>
+    }
+  </div>
+</section>

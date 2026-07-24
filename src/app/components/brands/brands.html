@@ -1,1 +1,15 @@
-<p>brands works!</p>
+<section class="container py-5">
+  <h2 class="text-main fw-bold mb-4">All Brands</h2>
+  <div class="row g-4">
+    @for (brand of (brands$ | async); track brand._id) {
+      <div class="col-md-3 col-sm-6">
+        <div class="product p-3 text-center h-100 d-flex flex-column justify-content-center align-items-center">
+          <img [src]="brand.image" [alt]="brand.name" class="w-100 object-fit-contain" height="140" />
+          <h3 class="h6 fw-bold mt-3 text-dark mb-0">{{ brand.name }}</h3>
+        </div>
+      </div>
+    } @empty {
+      <div class="col-12 text-muted">Loading brands...</div>
+    }
+  </div>
+</section>

@@ -1,1 +1,45 @@
-<p>home works!</p>
+<!-- Categories Section -->
+<section class="container my-5">
+  <h2 class="h3 fw-bold text-main mb-4">Shop By Category</h2>
+  <div class="row g-3">
+    @for (cat of (categories$ | async); track cat._id) {
+      <div class="col-md-2 col-4">
+        <div class="product p-2 text-center h-100">
+          <img [src]="cat.image" [alt]="cat.name" class="w-100 object-fit-cover rounded" height="120" />
+          <h3 class="h6 fw-semibold text-dark mt-2 mb-0">{{ cat.name }}</h3>
+        </div>
+      </div>
+    } @empty {
+      <div class="col-12 text-muted">Loading categories...</div>
+    }
+  </div>
+</section>
+
+<!-- Popular Products Section -->
+<section class="container my-5">
+  <h2 class="h3 fw-bold text-main mb-4">Popular Products</h2>
+  <div class="row g-4">
+    @for (product of (products$ | async); track product._id) {
+      <div class="col-md-3 col-sm-6">
+        <div class="product p-3 h-100 d-flex flex-column justify-content-between">
+          <div>
+            <img [src]="product.imageCover" [alt]="product.title" class="w-100 object-fit-cover" height="220" />
+            <span class="text-main font-sm fw-semibold mt-2 d-block">{{ product.category.name }}</span>
+            <h3 class="h6 fw-bold mt-1 text-truncate">{{ product.title }}</h3>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center mt-3">
+            <span class="fw-bold">{{ product.price }} EGP</span>
+            <span class="font-sm">
+              <i class="fa-solid fa-star rating-color"></i> {{ product.ratingsAverage }}
+            </span>
+          </div>
+
+          <button class="btn bg-main text-white w-100 mt-3">+ Add To Cart</button>
+        </div>
+      </div>
+    } @empty {
+      <div class="col-12 text-muted">Loading products...</div>
+    }
+  </div>
+</section>

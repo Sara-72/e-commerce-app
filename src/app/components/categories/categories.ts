@@ -1,9 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { EcommerceService } from '../../core/services/ecommerce';
+import { Category } from '../../core/interfaces/product';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-categories',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './categories.html',
-  styleUrl: './categories.css',
+  styleUrl: './categories.css'
 })
-export class Categories {}
+export class Categories  {
+ private _ecommerceService = inject(EcommerceService);
+
+  categories$: Observable<Category[]> = this._ecommerceService.getCategories().pipe(
+    map(res => res.data)
+  );
+}
