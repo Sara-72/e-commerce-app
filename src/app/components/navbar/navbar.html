@@ -1,0 +1,57 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary py-3">
+    <div class="container">
+      <h1 class="navbar-brand text-main fw-bold m-3 cursor-pointer">Netpoint Store</h1>
+
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarSupportedContent">
+        <ul class="navbar-nav mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page"routerLinkActive="navbar-active" routerLink="/home">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page"routerLinkActive="navbar-active" routerLink="/products">Products</a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page"routerLinkActive="navbar-active" routerLink="/categories">Categories</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page"routerLinkActive="navbar-active" routerLink="/brands">Brands</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+
+            </a>
+
+          </li>
+
+        </ul>
+
+        <ul class="navbar-nav  mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link position-relative active" aria-current="page" routerLinkActive="navbar-active" routerLink="/wishlist">
+                Wishlist <i class="fa-regular fa-heart"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                  0
+                  <span class="visually-hidden">unread messages</span>
+                </span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link position-relative active mx-3" aria-current="page" routerLinkActive="navbar-active" routerLink="/cart">Cart <i class="fa-solid fa-cart-shopping"></i>
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                0
+                <span class="visually-hidden">unread messages</span>
+              </span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active logOut"  aria-current="page" routerLinkActive="navbar-active">Logout</a>
+            </li>
+
+          </ul>
+      </div>
+    </div>
+  </nav>
