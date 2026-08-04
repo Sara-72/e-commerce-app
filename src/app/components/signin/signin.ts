@@ -29,6 +29,7 @@ export class SigninComponent {
       this.isLoading = true;
       this.errorMessage = '';
 
+
       this._authService.login(this.signinForm.value).subscribe({
         next: (res) => {
           this.isLoading = false;
@@ -37,10 +38,11 @@ export class SigninComponent {
             this._router.navigate(['/home']);
           }
         },
-        error: (err) => {
-          this.isLoading = false;
-          this.errorMessage = err.error.message;
-        }
+error: (err) => {
+        this.isLoading = false; // Ensures spinner stops on error
+        console.error('Login error details:', err);
+        this.errorMessage = err.error?.message || 'Login failed. Please check your credentials.';
+      }
       });
     } else {
       this.signinForm.markAllAsTouched();
