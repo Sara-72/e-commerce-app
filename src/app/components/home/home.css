@@ -1,0 +1,23 @@
+
+
+/* Hero Slider Container */
+.hero-slider {
+  width: 100%;
+  display: block;
+}
+
+/* Control height on swiper-slide */
+.hero-slider swiper-slide {
+  height: 400px;
+}
+
+/* Force image to fill slide height and cover seamlessly */
+.hero-slider img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}

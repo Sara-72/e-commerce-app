@@ -1,48 +1,68 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EcommerceService } from '../../core/services/ecommerce';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { Product, Category } from '../../core/interfaces/product';
+import { register } from 'swiper/element/bundle';
 
 @Component({
   selector: 'app-home',
   standalone: true,
   imports: [CommonModule],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
 export class Home implements OnInit {
- private _ecommerceService = inject(EcommerceService);
+  private _ecommerceService = inject(EcommerceService);
 
   productsList: Product[] = [];
   categoriesList: Category[] = [];
 
-  ngOnInit(): void {
-    // Categories API
-    this._ecommerceService.getCategories().subscribe({
-      next: (res) => {
-        console.log('Categories data:', res.data); // Verify data array in F12 console
-        this.categoriesList = res.data;
-      },
-      error: (err) => console.error(err)
-    });
+  // Track loading state explicitly
+  isLoadingProducts: boolean = true;
+  isLoadingCategories: boolean = true;
+  hasError: boolean = false;
 
-    // Products API
-    this._ecommerceService.getProducts().subscribe({
-      next: (res) => {
-        console.log('Products data:', res.data); // Verify data array in F12 console
-        this.productsList = res.data;
-      },
-      error: (err) => console.error(err)
-    });
+
+  bannerImages: string[] = [
+    '/assets/1.jpg',
+    '/assets/2.jpg',
+    '/assets/3.jpg'
+  ];
+
+ ngOnInit(): void {
+    register();
+    this.loadData();
   }
 
-  categories$: Observable<Category[]> = this._ecommerceService.getCategories().pipe(
-    map(res => res.data)
-  );
+  loadData(): void {
+    this.isLoadingProducts = true;
+    this.isLoadingCategories = true;
+    this.hasError = false;
 
-  products$: Observable<Product[]> = this._ecommerceService.getProducts().pipe(
-    map(res => res.data)
-  );
+    // Fetch Categories
+    this._ecommerceService.getCategories().subscribe({
+      next: (res) => {
+        this.categoriesList = res.data ?? res;
+        this.isLoadingCategories = false;
+      },
+      error: (err) => {
+        console.error('Categories Error on refresh:', err);
+        this.isLoadingCategories = false;
+      }
+    });
+
+    // Fetch Products
+    this._ecommerceService.getProducts().subscribe({
+      next: (res) => {
+        this.productsList = res.data ?? res;
+        this.isLoadingProducts = false;
+      },
+      error: (err) => {
+        console.error('Products Error on refresh:', err);
+        this.isLoadingProducts = false;
+        this.hasError = true;
+      }
+    });
+  }
 }

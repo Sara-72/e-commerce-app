@@ -1,18 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
 /* You can add global styles to this file, and also import other style files */
 @import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Encode+Sans+Expanded:wght@300;400;500;600;700&display=swap');
+/* src/styles.css */
+
 
 :root
 {
-    /* === هوية بصرية عضوية/طازجة - مش لون بوتستراب افتراضي === */
+
     --main-color:#959f0e;
     --main-color-dark:#657f07;
     --main-color-darker:#4d5f06;
     --main-color-light:#eef2d9;
 
-    --ink:#22281a;              /* أسود دافي بدل الأسود العادي */
+    --ink:#22281a;
     --secondary-color:#22281a;
-    --paper:#fbfaf4;            /* خلفية كريمية دافية بدل الأبيض الجامد */
+    --paper:#fbfaf4;
     --light-color:#f3f1e6;
 
     --shadow: 0 2px 4px -1px rgba(34,40,26,.06), 0 4px 5px 0 rgba(34,40,26,.05), 0 1px 10px 0 rgba(34,40,26,.06);

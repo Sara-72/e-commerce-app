@@ -1,45 +1,103 @@
-<!-- Categories Section -->
-<section class="container my-5">
-  <h2 class="h3 fw-bold text-main mb-4">Shop By Category</h2>
-  <div class="row g-3">
-    @for (cat of (categories$ | async); track cat._id) {
-      <div class="col-md-2 col-4">
-        <div class="product p-2 text-center h-100">
-          <img [src]="cat.image" [alt]="cat.name" class="w-100 object-fit-cover rounded" height="120" />
-          <h3 class="h6 fw-semibold text-dark mt-2 mb-0">{{ cat.name }}</h3>
-        </div>
-      </div>
-    } @empty {
-      <div class="col-12 text-muted">Loading categories...</div>
+
+<!-- Full-Width Edge-to-Edge Hero Carousel -->
+<section class="w-100 mb-5 p-0">
+  <swiper-container
+   loop="true"
+    autoplay="true"
+    autoplay-delay="3000"
+    autoplay-disable-on-interaction="false"
+    pagination="true"
+    slides-per-view="1"
+    space-between="0"
+    grab-cursor="true"
+    class="hero-slider"
+  >
+    @for (img of bannerImages; track $index) {
+      <swiper-slide>
+        <img
+          [src]="img"
+          alt="Hero Banner Image"
+        />
+      </swiper-slide>
     }
-  </div>
+  </swiper-container>
 </section>
 
-<!-- Popular Products Section -->
+<!-- Categories Slider -->
 <section class="container my-5">
-  <h2 class="h3 fw-bold text-main mb-4">Popular Products</h2>
-  <div class="row g-4">
-    @for (product of (products$ | async); track product._id) {
-      <div class="col-md-3 col-sm-6">
-        <div class="product p-3 h-100 d-flex flex-column justify-content-between">
-          <div>
-            <img [src]="product.imageCover" [alt]="product.title" class="w-100 object-fit-cover" height="220" />
-            <span class="text-main font-sm fw-semibold mt-2 d-block">{{ product.category.name }}</span>
-            <h3 class="h6 fw-bold mt-1 text-truncate">{{ product.title }}</h3>
-          </div>
+  <h3 class="fw-bold mb-3 text-main">Shop Popular Categories</h3>
 
-          <div class="d-flex justify-content-between align-items-center mt-3">
-            <span class="fw-bold">{{ product.price }} EGP</span>
-            <span class="font-sm">
-              <i class="fa-solid fa-star rating-color"></i> {{ product.ratingsAverage }}
-            </span>
+  @if (isLoadingCategories) {
+    <div class="text-center py-3">
+      <div class="spinner-border text-main" role="status"></div>
+    </div>
+  } @else if (categoriesList && categoriesList.length) {
+    <swiper-container
+      loop="true"
+      autoplay-delay="2500"
+      space-between="15"
+      breakpoints='{"0": {"slidesPerView": 2}, "400": {"slidesPerView": 3}, "740": {"slidesPerView": 4}, "940": {"slidesPerView": 6}}'
+    >
+      @for (cat of categoriesList; track cat._id || $index) {
+        <swiper-slide>
+          <div class="text-center p-2">
+            <img
+              [src]="cat.image"
+              [alt]="cat.name"
+              class="w-100 object-fit-cover rounded mb-2"
+              height="200"
+            />
+            <h4 class="h6 fw-bold text-dark">{{ cat.name }}</h4>
           </div>
+        </swiper-slide>
+      }
+    </swiper-container>
+  }
+</section>
 
-          <button class="btn bg-main text-white w-100 mt-3">+ Add To Cart</button>
-        </div>
+<!-- Popular Products Grid -->
+<section class="container my-5">
+  <h3 class="fw-bold mb-4 text-main">Popular Products</h3>
+
+  @if (isLoadingProducts) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-main" role="status">
+        <span class="visually-hidden">Loading products...</span>
       </div>
-    } @empty {
-      <div class="col-12 text-muted">Loading products...</div>
-    }
-  </div>
+    </div>
+  } @else if (productsList && productsList.length > 0) {
+    <div class="row g-4">
+      @for (product of productsList; track product._id || $index) {
+        <div class="col-md-3 col-sm-6">
+          <div class="product p-3 rounded position-relative border">
+            <img
+              [src]="product.imageCover"
+              [alt]="product.title"
+              class="w-100 object-fit-contain mb-2"
+              height="250"
+            />
+            <span class="text-main font-sm fw-semibold">{{ product.category?.name }}</span>
+            <h4 class="h6 fw-bold text-truncate mb-2">{{ product.title }}</h4>
+
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="fw-bold">{{ product.price }} EGP</span>
+              <span class="text-muted font-sm">
+                <i class="fa-solid fa-star rating-color me-1"></i>{{ product.ratingsAverage }}
+              </span>
+            </div>
+
+            <button class="btn bg-main text-white w-100 mt-2">
+              + Add To Cart
+            </button>
+          </div>
+        </div>
+      }
+    </div>
+  } @else if (hasError) {
+    <div class="alert alert-danger text-center my-4">
+      Failed to load products. <button class="btn btn-sm btn-outline-danger ms-2" (click)="loadData()">Retry</button>
+    </div>
+  } @else {
+    <div class="alert alert-info text-center my-4">No products found.</div>
+  }
 </section>
