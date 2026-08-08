@@ -1,0 +1,84 @@
+<section class="container my-5 p-4 bg-main-light rounded shadow-sm">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h2 class="fw-bold text-main">Shop Cart</h2>
+      @if (cartDetails) {
+        <p class="text-main fw-semibold">
+          Total Cart Price: <span class="fw-bold fs-5 text-dark">{{ cartDetails.totalCartPrice }} EGP</span>
+        </p>
+      }
+    </div>
+
+    @if (cartDetails && cartDetails.products?.length > 0) {
+      <button class="btn btn-outline-danger btn-sm" (click)="clearCart()">
+        <i class="fa-regular fa-trash-can me-1"></i> Clear Cart
+      </button>
+    }
+  </div>
+
+  @if (isLoading) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-main" role="status">
+        <span class="visually-hidden">Loading cart...</span>
+      </div>
+    </div>
+  } @else if (cartDetails && cartDetails.products?.length > 0) {
+    <div class="cart-items">
+      @for (item of cartDetails.products; track item.product._id || $index) {
+        <div class="row align-items-center border-bottom py-3 g-3">
+          <!-- Product Image -->
+          <div class="col-md-2 col-4">
+            <img
+              [src]="item.product.imageCover"
+              [alt]="item.product.title"
+              class="w-100 object-fit-contain rounded"
+              height="120"
+            />
+          </div>
+
+          <!-- Product Details -->
+          <div class="col-md-7 col-8">
+            <h3 class="h6 fw-bold mb-1">{{ item.product.title }}</h3>
+            <p class="text-main fw-semibold mb-2">Price: {{ item.price }} EGP</p>
+            <button
+              class="btn text-danger p-0 border-0 bg-transparent font-sm"
+              (click)="removeItem(item.product._id)"
+            >
+              <i class="fa-regular fa-trash-can me-1"></i> Remove
+            </button>
+          </div>
+
+          <!-- Quantity Controls -->
+          <div class="col-md-3 col-12 d-flex align-items-center justify-content-md-end justify-content-between">
+            <div class="d-flex align-items-center border border-success rounded px-2 py-1 bg-white">
+              <button
+                class="btn btn-sm text-main p-0 border-0 bg-transparent fw-bold fs-5"
+                (click)="updateCount(item.product._id, item.count + 1)"
+              >
+                +
+              </button>
+              <span class="mx-3 fw-bold fs-6">{{ item.count }}</span>
+              <button
+                class="btn btn-sm text-main p-0 border-0 bg-transparent fw-bold fs-5"
+                (click)="updateCount(item.product._id, item.count - 1)"
+              >
+                -
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  } @else if (hasError) {
+    <div class="alert alert-danger text-center my-4">
+      Failed to load cart details.
+      <button class="btn btn-sm btn-outline-danger ms-2" (click)="getCart()">Retry</button>
+    </div>
+  } @else {
+    <div class="text-center py-5">
+      <i class="fa-solid fa-cart-flatbed fs-1 text-muted mb-3"></i>
+      <h4 class="text-muted fw-bold">Your cart is empty</h4>
+      <a routerLink="/products" class="btn bg-main text-white mt-3">Start Shopping</a>
+    </div>
+  }
+</section>

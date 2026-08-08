@@ -1,26 +1,27 @@
-
 <!-- Full-Width Edge-to-Edge Hero Carousel -->
 <section class="w-100 mb-5 p-0">
-  <swiper-container
-   loop="true"
-    autoplay="true"
-    autoplay-delay="3000"
-    autoplay-disable-on-interaction="false"
-    pagination="true"
-    slides-per-view="1"
-    space-between="0"
-    grab-cursor="true"
-    class="hero-slider"
-  >
-    @for (img of bannerImages; track $index) {
-      <swiper-slide>
-        <img
-          [src]="img"
-          alt="Hero Banner Image"
-        />
-      </swiper-slide>
-    }
-  </swiper-container>
+  @if (bannerImages && bannerImages.length > 0) {
+    <swiper-container
+      [attr.loop]="bannerImages.length > 1 ? 'true' : null"
+      autoplay="true"
+      autoplay-delay="3000"
+      autoplay-disable-on-interaction="false"
+      pagination="true"
+      slides-per-view="1"
+      space-between="0"
+      grab-cursor="true"
+      class="hero-slider"
+    >
+      @for (img of bannerImages; track $index) {
+        <swiper-slide>
+          <img
+            [src]="img"
+            alt="Hero Banner Image"
+          />
+        </swiper-slide>
+      }
+    </swiper-container>
+  }
 </section>
 
 <!-- Categories Slider -->
@@ -31,12 +32,18 @@
     <div class="text-center py-3">
       <div class="spinner-border text-main" role="status"></div>
     </div>
-  } @else if (categoriesList && categoriesList.length) {
+  } @else if (categoriesList && categoriesList.length > 0) {
     <swiper-container
-      loop="true"
+      class="categories-slider"
+      [attr.loop]="categoriesList.length > 6 ? 'true' : null"
       autoplay-delay="2500"
       space-between="15"
-      breakpoints='{"0": {"slidesPerView": 2}, "400": {"slidesPerView": 3}, "740": {"slidesPerView": 4}, "940": {"slidesPerView": 6}}'
+      [breakpoints]="{
+        '0': { 'slidesPerView': 2 },
+        '400': { 'slidesPerView': 3 },
+        '740': { 'slidesPerView': 4 },
+        '940': { 'slidesPerView': 6 }
+      }"
     >
       @for (cat of categoriesList; track cat._id || $index) {
         <swiper-slide>
@@ -52,6 +59,8 @@
         </swiper-slide>
       }
     </swiper-container>
+  } @else {
+    <p class="text-muted">No categories available.</p>
   }
 </section>
 
@@ -69,7 +78,10 @@
     <div class="row g-4">
       @for (product of productsList; track product._id || $index) {
         <div class="col-md-3 col-sm-6">
-          <div class="product p-3 rounded position-relative border">
+          <div
+            class="product p-3 rounded position-relative border cursor-pointer"
+            [routerLink]="['/productdetails', product._id]"
+          >
             <img
               [src]="product.imageCover"
               [alt]="product.title"
@@ -86,7 +98,10 @@
               </span>
             </div>
 
-            <button class="btn bg-main text-white w-100 mt-2">
+            <button
+              class="btn bg-main text-white w-100 mt-2"
+              (click)="$event.stopPropagation(); addToCart(product._id)"
+            >
               + Add To Cart
             </button>
           </div>

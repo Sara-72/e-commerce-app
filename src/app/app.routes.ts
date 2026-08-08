@@ -6,6 +6,7 @@ import { Products } from './components/products/products';
 import { Navbar } from './components/navbar/navbar';
 import { SignupComponent } from './components/signup/signup';
 import { SigninComponent } from './components/signin/signin';
+import { ProductDetails } from './components/product-details/product-details';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -16,5 +17,14 @@ export const routes: Routes = [
   { path :'navbar',component:Navbar,title :'Navbar'},
   { path: 'signup', component: SignupComponent, title: 'Sign Up' },
   { path: 'signin', component: SigninComponent, title: 'Sign In' },
+  { path: 'productdetails/:id', component: ProductDetails },// Dynamic parameter
+
+  {
+    path: 'cart',
+    loadComponent: () => import('./pages/cart/cart').then(m => m.Cart),
+    title: 'Cart'
+  },
+  { path: '**', redirectTo: 'home' }
+
 
 ];

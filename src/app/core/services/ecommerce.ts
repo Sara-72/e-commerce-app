@@ -23,4 +23,8 @@ export class EcommerceService {
   getBrands(): Observable<{ data: Brand[] }> {
     return this._httpClient.get<{ data: Brand[] }>(`${this.baseUrl}/brands`);
   }
+  
+  getSpecificProduct(id: string): Observable<any> {
+    return this._httpClient.get(`https://ecommerce.routemisr.com/api/v1/products/${id}`);
+  }
 }
