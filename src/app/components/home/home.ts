@@ -4,7 +4,9 @@ import { EcommerceService } from '../../core/services/ecommerce';
 import { Product, Category } from '../../core/interfaces/product';
 import { register } from 'swiper/element/bundle';
 import { RouterLink } from '@angular/router';
-import { CartService } from '../../core/services/cart'; // <-- Import CartService
+import { CartService } from '../../core/services/cart'; // <-- CartService
+import { Wishlist } from '../../core/services/wishlist';
+
 
 @Component({
   selector: 'app-home',
@@ -18,6 +20,7 @@ export class Home implements OnInit {
   private _ecommerceService = inject(EcommerceService);
   private _cdr = inject(ChangeDetectorRef);
   private _cartService = inject(CartService); // <-- Inject CartService
+  private readonly _wishlistService = inject(Wishlist);
 
   productsList: Product[] = [];
   categoriesList: Category[] = [];
@@ -35,6 +38,8 @@ export class Home implements OnInit {
   ngOnInit(): void {
     register();
     this.loadData();
+    this.loadWishlistIds();
+    this.getWishlist();
   }
 
   loadData(): void {
@@ -93,5 +98,53 @@ export class Home implements OnInit {
         alert('Failed to add product to cart. Make sure you are logged in.');
       }
     });
+  }
+ wishlistIds: string[] = [];
+
+
+ getWishlist(): void {
+    this._wishlistService.getLoggedUserWishlist().subscribe({
+      next: (res) => {
+        // The GET request returns full product objects, so we map them to get just the IDs
+        if (res?.data) {
+          this.wishlistIds = res.data.map((item: any) => item._id);
+          this._cdr.detectChanges();
+        }
+      }
+    });
+  }
+
+
+  loadWishlistIds(): void {
+    // 2. Use _wishlistService (matching the name above)
+    this._wishlistService.getLoggedUserWishlist().subscribe({
+      next: (res) => {
+        this.wishlistIds = res.data.map((item: any) => item._id);
+      }
+    });
+  }
+
+ toggleWishlist(productId: string): void {
+    if (!productId) return;
+
+    if (this.wishlistIds.includes(productId)) {
+      // Remove from wishlist
+      this._wishlistService.removeFromWishlist(productId).subscribe({
+        next: (res: any) => {
+          // The API returns the exact updated list of IDs in res.data!
+          this.wishlistIds = res.data;
+          this._cdr.detectChanges(); // Update the UI
+        }
+      });
+    } else {
+      // Add to wishlist
+      this._wishlistService.addToWishlist(productId).subscribe({
+        next: (res: any) => {
+          // The API returns the exact updated list of IDs in res.data!
+          this.wishlistIds = res.data;
+          this._cdr.detectChanges(); // Update the UI
+        }
+      });
+    }
   }
 }

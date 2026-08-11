@@ -34,8 +34,21 @@
             </div>
 
             <button
+              type="button"
+              class="btn border-0 p-0 position-absolute top-0 end-0 m-3 z-3"
+              (click)="$event.stopPropagation(); toggleWishlist(product._id)"
+            >
+              <i
+                class="fa-solid fa-heart fs-4 cursor-pointer"
+                [class.text-danger]="wishlistIds.includes(product._id)"
+                [class.text-secondary]="!wishlistIds.includes(product._id)"
+              ></i>
+            </button>
+
+            <button
               class="btn bg-main text-white w-100 mt-2"
-(click)="$event.stopPropagation(); addToCart(product._id)"            >
+              (click)="$event.stopPropagation(); addToCart(product._id)"
+            >
               + Add To Cart
             </button>
           </div>

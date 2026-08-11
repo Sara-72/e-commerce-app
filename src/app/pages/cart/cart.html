@@ -3,16 +3,24 @@
     <div>
       <h2 class="fw-bold text-main">Shop Cart</h2>
       @if (cartDetails) {
-        <p class="text-main fw-semibold">
+        <p class="text-main fw-semibold mb-0">
           Total Cart Price: <span class="fw-bold fs-5 text-dark">{{ cartDetails.totalCartPrice }} EGP</span>
         </p>
       }
     </div>
 
     @if (cartDetails && cartDetails.products?.length > 0) {
-      <button class="btn btn-outline-danger btn-sm" (click)="clearCart()">
-        <i class="fa-regular fa-trash-can me-1"></i> Clear Cart
-      </button>
+      <div class="d-flex align-items-center gap-2">
+        <!-- Clear Cart Button -->
+        <button class="btn btn-outline-danger btn-sm px-3" (click)="clearCart()">
+          <i class="fa-regular fa-trash-can me-1"></i> Clear Cart
+        </button>
+
+        <!-- Place Order Button -->
+        <a [routerLink]="['/address', cartDetails._id]" class="btn bg-main text-white fw-semibold">
+          Place Order <i class="fa-solid fa-arrow-right ms-1"></i>
+        </a>
+      </div>
     }
   </div>
 

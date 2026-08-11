@@ -4,6 +4,7 @@ import { RouterLink } from '@angular/router';
 import { EcommerceService } from '../../core/services/ecommerce';
 import { Product } from '../../core/interfaces/product';
 import { CartService } from '../../core/services/cart'; // <-- Import CartService
+import { Wishlist } from '../../core/services/wishlist'; // <-- Import WishlistService
 
 @Component({
   selector: 'app-products',
@@ -16,13 +17,16 @@ export class Products implements OnInit {
   private readonly _ecommerceService = inject(EcommerceService);
   private readonly _cartService = inject(CartService); // <-- Inject CartService
   private readonly _cdr = inject(ChangeDetectorRef);
+  private readonly _wishlistService = inject(Wishlist); // <-- Inject WishlistService
 
   productsList: Product[] = [];
   isLoading: boolean = true;
   hasError: boolean = false;
+  wishlistIds: string[] = []; // <-- Holds favorite product IDs
 
   ngOnInit(): void {
     this.getProducts();
+    this.getWishlist();
   }
 
   getProducts(): void {
@@ -61,5 +65,39 @@ export class Products implements OnInit {
         alert('Failed to add product to cart. Please check if you are logged in.');
       }
     });
+  }
+
+  getWishlist(): void {
+    this._wishlistService.getLoggedUserWishlist().subscribe({
+      next: (res: any) => {
+        if (res?.data) {
+          this.wishlistIds = res.data.map((item: any) => item._id);
+          this._cdr.detectChanges();
+        }
+      },
+      error: (err: any) => console.error('Error getting wishlist:', err)
+    });
+  }
+
+  toggleWishlist(productId: string): void {
+    if (!productId) return;
+
+    if (this.wishlistIds.includes(productId)) {
+      this._wishlistService.removeFromWishlist(productId).subscribe({
+        next: (res: any) => {
+          this.wishlistIds = res.data; // Sync directly with backend array
+          this._cdr.detectChanges();
+        },
+        error: (err) => console.error('Error removing from wishlist:', err)
+      });
+    } else {
+      this._wishlistService.addToWishlist(productId).subscribe({
+        next: (res: any) => {
+          this.wishlistIds = res.data; // Sync directly with backend array
+          this._cdr.detectChanges();
+        },
+        error: (err) => console.error('Error adding to wishlist:', err)
+      });
+    }
   }
 }

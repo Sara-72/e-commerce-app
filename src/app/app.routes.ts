@@ -24,6 +24,16 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/cart/cart').then(m => m.Cart),
     title: 'Cart'
   },
+  {
+    path: 'address/:id',
+    loadComponent: () => import('./pages/address/address').then(m => m.AddressComponent),
+    title: 'Shipping Address'
+  },
+  {
+    path: 'wishlist',
+    loadComponent: () => import('./pages/wishlist/wishlist').then(m => m.WishlistComponent),
+    title: 'Wishlist'
+  },
   { path: '**', redirectTo: 'home' }
 
 
