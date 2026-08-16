@@ -1,17 +1,20 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; // <-- Import FormsModule
 import { EcommerceService } from '../../core/services/ecommerce';
 import { Product, Category } from '../../core/interfaces/product';
 import { register } from 'swiper/element/bundle';
 import { RouterLink } from '@angular/router';
 import { CartService } from '../../core/services/cart'; // <-- CartService
 import { Wishlist } from '../../core/services/wishlist';
+import { SearchPipe } from '../../core/pipes/search-pipe'; // <-- Import SearchPipe
+import { TranslatePipe } from '@ngx-translate/core'; // <-- Import TranslatePipe
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink ,FormsModule,SearchPipe ,TranslatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './home.html',
   styleUrl: './home.css'
@@ -24,6 +27,7 @@ export class Home implements OnInit {
 
   productsList: Product[] = [];
   categoriesList: Category[] = [];
+  text: string = ''; // <-- Holds the user's search input text
 
   isLoadingProducts: boolean = true;
   isLoadingCategories: boolean = true;

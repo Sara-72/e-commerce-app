@@ -65,6 +65,21 @@
 <section class="container my-5">
   <h3 class="fw-bold mb-4 text-main">Popular Products</h3>
 
+  <!-- Search Input Bar -->
+  <div class="my-4 col-md-8 mx-auto">
+    <div class="position-relative">
+      <input
+        type="search"
+        [(ngModel)]="text"
+        class="form-control form-control-lg pe-5 rounded-pill shadow-sm"
+        [placeholder]="'PRODUCTS.SEARCH_PLACEHOLDER' | translate"
+      />
+      <i
+        class="fa-solid fa-magnifying-glass position-absolute top-50 end-0 translate-middle-y me-3 text-muted fs-5"
+      ></i>
+    </div>
+  </div>
+
   @if (isLoadingProducts) {
     <div class="text-center py-5">
       <div class="spinner-border text-main" role="status">
@@ -73,7 +88,7 @@
     </div>
   } @else if (productsList && productsList.length > 0) {
     <div class="row g-4">
-      @for (product of productsList; track product._id || $index) {
+      @for (product of productsList | search: text; track product._id || $index) {
         <div class="col-md-3 col-sm-6">
           <div
             class="product p-3 rounded position-relative border cursor-pointer"
@@ -112,9 +127,14 @@
               class="btn bg-main text-white w-100 mt-2"
               (click)="$event.stopPropagation(); addToCart(product._id)"
             >
-              + Add To Cart
+              {{ 'PRODUCTS.ADD_TO_CART' | translate }}
             </button>
           </div>
+        </div>
+      } @empty {
+        <div class="text-center py-5 col-12">
+          <i class="fa-solid fa-box-open fs-1 text-muted mb-3"></i>
+          <h4 class="text-muted fw-bold">No products match "{{ text }}"</h4>
         </div>
       }
     </div>

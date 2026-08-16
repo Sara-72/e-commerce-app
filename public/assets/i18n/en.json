@@ -1,0 +1,44 @@
+{
+  "NAVBAR": {
+    "HOME": "Home",
+    "PRODUCTS": "Products",
+    "CATEGORIES": "Categories",
+    "BRANDS": "Brands",
+    "CART": "Cart",
+    "WISHLIST": "Wishlist",
+    "LOGOUT": "Sign Out",
+    "LOGIN": "Login",
+    "REGISTER": "Register"
+  },
+  "PRODUCTS": {
+    "SEARCH_PLACEHOLDER": "Search products by title...",
+    "ADD_TO_CART": "Add To Cart",
+    "PRICE": "EGP",
+    "NO_PRODUCTS": "No products match"
+  },
+  "CART": {
+    "TITLE": "Shopping Cart",
+    "TOTAL": "Total Price",
+    "CLEAR": "Clear Cart",
+    "CHECKOUT": "Proceed to Checkout",
+    "EMPTY": "Your cart is empty"
+  },
+  "AUTH": {
+    "REGISTER_TITLE": "Create an Account",
+    "NAME": "Full Name",
+    "EMAIL": "Email Address",
+    "PASSWORD": "Password",
+    "REPASSWORD": "Confirm Password",
+    "PHONE": "Phone Number",
+    "REGISTER_BTN": "Sign Up",
+    "ALREADY_HAVE_ACCOUNT": "Already have an account?",
+    "LOGIN_HERE": "Login here",
+    "LOGIN_TITLE": "Login",
+  
+    "LOGIN_BTN": "Login",
+    "DONT_HAVE_ACCOUNT": "Don't have an account?",
+    "SIGN_UP": "Sign Up"
+
+  }
+
+}

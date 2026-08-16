@@ -1,10 +1,10 @@
 <section class="container my-5 p-4 bg-main-light rounded shadow-sm">
   <div class="d-flex justify-content-between align-items-center mb-4">
     <div>
-      <h2 class="fw-bold text-main">Shop Cart</h2>
+      <h2 class="fw-bold text-main">{{ 'CART.TITLE' | translate }}</h2>
       @if (cartDetails) {
         <p class="text-main fw-semibold mb-0">
-          Total Cart Price: <span class="fw-bold fs-5 text-dark">{{ cartDetails.totalCartPrice }} EGP</span>
+          {{ 'CART.TOTAL' | translate }}: <span class="fw-bold fs-5 text-dark">{{ cartDetails?.totalCartPrice || 0 }} {{ 'PRODUCTS.PRICE' | translate }}</span>
         </p>
       }
     </div>
@@ -13,12 +13,12 @@
       <div class="d-flex align-items-center gap-2">
         <!-- Clear Cart Button -->
         <button class="btn btn-outline-danger btn-sm px-3" (click)="clearCart()">
-          <i class="fa-regular fa-trash-can me-1"></i> Clear Cart
+          <i class="fa-regular fa-trash-can me-1"></i> {{ 'CART.CLEAR' | translate }}
         </button>
 
         <!-- Place Order Button -->
         <a [routerLink]="['/address', cartDetails._id]" class="btn bg-main text-white fw-semibold">
-          Place Order <i class="fa-solid fa-arrow-right ms-1"></i>
+          {{ 'CART.CHECKOUT' | translate }} <i class="fa-solid fa-arrow-right ms-1"></i>
         </a>
       </div>
     }
@@ -47,7 +47,7 @@
           <!-- Product Details -->
           <div class="col-md-7 col-8">
             <h3 class="h6 fw-bold mb-1">{{ item.product.title }}</h3>
-            <p class="text-main fw-semibold mb-2">Price: {{ item.price }} EGP</p>
+            <p class="text-main fw-semibold mb-2">{{ item.price }} {{ 'PRODUCTS.PRICE' | translate }}</p>
             <button
               class="btn text-danger p-0 border-0 bg-transparent font-sm"
               (click)="removeItem(item.product._id)"
@@ -85,7 +85,7 @@
   } @else {
     <div class="text-center py-5">
       <i class="fa-solid fa-cart-flatbed fs-1 text-muted mb-3"></i>
-      <h4 class="text-muted fw-bold">Your cart is empty</h4>
+      <h4 class="text-muted fw-bold">{{ 'CART.EMPTY' | translate }}</h4>
       <a routerLink="/products" class="btn bg-main text-white mt-3">Start Shopping</a>
     </div>
   }

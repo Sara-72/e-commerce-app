@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../core/services/auth';
+import { TranslatePipe } from '@ngx-translate/core'; // <-- Import TranslatePipe
 
 @Component({
   selector: 'app-signin',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  imports: [CommonModule, ReactiveFormsModule, RouterLink ,TranslatePipe],
   templateUrl: './signin.html',
   styleUrl: './signin.css'
 })
@@ -35,10 +36,13 @@ export class SigninComponent {
           this.isLoading = false;
           if (res.message === 'success') {
             localStorage.setItem('userToken', res.token);
+            this._authService.saveToken(res.token);
+
             this._router.navigate(['/home']);
           }
+
         },
-error: (err) => {
+      error: (err) => {
         this.isLoading = false; // Ensures spinner stops on error
         console.error('Login error details:', err);
         this.errorMessage = err.error?.message || 'Login failed. Please check your credentials.';

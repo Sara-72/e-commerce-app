@@ -1,6 +1,8 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary py-3">
+<nav class="navbar navbar-expand-lg bg-body-tertiary py-4">
   <div class="container">
-    <h1 class="navbar-brand text-main fw-bold m-3 cursor-pointer">Netpoint Store</h1>
+    <a class="navbar-brand text-main fw-bold cursor-pointer" routerLink="/home">
+      Netpoint Store
+    </a>
 
     <button
       class="navbar-toggler"
@@ -13,101 +15,81 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div
-      class="collapse navbar-collapse d-flex justify-content-between"
-      id="navbarSupportedContent"
-    >
-      <ul class="navbar-nav mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a
-            class="nav-link active"
-            aria-current="page"
-            routerLinkActive="navbar-active"
-            routerLink="/home"
-            >Home</a
-          >
-        </li>
-        <li class="nav-item">
-          <a
-            class="nav-link active"
-            aria-current="page"
-            routerLinkActive="navbar-active"
-            routerLink="/products"
-            >Products</a
-          >
-        </li>
 
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Main Navigation Links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 align-items-center">
         <li class="nav-item">
-          <a
-            class="nav-link active"
-            aria-current="page"
-            routerLinkActive="navbar-active"
-            routerLink="/categories"
-            >Categories</a
-          >
+          <a class="nav-link" routerLink="/home" routerLinkActive="navbar-active">
+            {{ 'NAVBAR.HOME' | translate }}
+          </a>
         </li>
         <li class="nav-item">
-          <a
-            class="nav-link active"
-            aria-current="page"
-            routerLinkActive="navbar-active"
-            routerLink="/brands"
-            >Brands</a
-          >
+          <a class="nav-link" routerLink="/products" routerLinkActive="navbar-active">
+            {{ 'NAVBAR.PRODUCTS' | translate }}
+          </a>
         </li>
-        <li class="nav-item dropdown">
-          <a
-            class="nav-link dropdown-toggle"
-            href="#"
-            role="button"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/categories" routerLinkActive="navbar-active">
+            {{ 'NAVBAR.CATEGORIES' | translate }}
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/brands" routerLinkActive="navbar-active">
+            {{ 'NAVBAR.BRANDS' | translate }}
           </a>
         </li>
       </ul>
 
-      <ul class="navbar-nav mb-2 mb-lg-0">
+      <!-- Right Side Actions -->
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center gap-2">
+        <!-- Language Switcher Button -->
         <li class="nav-item">
-          <a
-            class="nav-link position-relative cursor-pointer"
-            routerLink="/wishlist"
-            routerLinkActive="active"
-          >
-            <i class="fa-solid fa-heart fs-5"></i>
-            @if (wishlistCountNumber > 0) {
-              <span
-                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger font-sm"
-              >
-                {{ wishlistCountNumber }}
-              </span>
-            }
-          </a>
+          <button class="btn btn-outline-success btn-sm px-3 fw-bold rounded-pill" (click)="toggleLanguage()">
+            {{ _translationService.getCurrentLang() === 'en' ? 'عربي' : 'English' }}
+          </button>
         </li>
-        <li class="nav-item">
-          <a
-            class="nav-link position-relative cursor-pointer"
-            routerLink="/cart"
-            routerLinkActive="active"
-          >
-            <i class="fa-solid fa-cart-shopping fs-5"></i>
-            @if (countNumber > 0) {
-              <span
-                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-main"
-              >
-                {{ countNumber }}
-              </span>
-            }
-          </a>
-        </li>
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+
+        @if (_authService.isLoggedIn()) {
+          <!-- Wishlist Link with Badge -->
           <li class="nav-item">
-            <a class="nav-link px-3" routerLink="/signin" routerLinkActive="active">Signin</a>
+            <a class="nav-link position-relative px-2" routerLink="/wishlist" routerLinkActive="navbar-active">
+              <i class="fa-solid fa-heart fs-5"></i>
+              @if (wishlistCountNumber > 0) {
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger font-sm">
+                  {{ wishlistCountNumber }}
+                </span>
+              }
+            </a>
+          </li>
+
+          <!-- Cart Link with Badge -->
+          <li class="nav-item">
+            <a class="nav-link position-relative px-2 me-2" routerLink="/cart" routerLinkActive="navbar-active">
+              <i class="fa-solid fa-cart-shopping fs-5"></i>
+              @if (countNumber > 0) {
+                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-main font-sm">
+                  {{ countNumber }}
+                </span>
+              }
+            </a>
+          </li>
+
+          <!-- Logout Button -->
+          <li class="nav-item">
+            <button class="btn btn-outline-danger btn-sm px-3 fw-bold rounded-pill" (click)="_authService.logout()">
+              {{ 'NAVBAR.LOGOUT' | translate }}
+            </button>
+          </li>
+        } @else {
+          <!-- Auth Links -->
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/signin">{{ 'NAVBAR.LOGIN' | translate }}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link px-3" routerLink="/signup" routerLinkActive="active">Signup</a>
+            <a class="nav-link" routerLink="/signup">{{ 'NAVBAR.REGISTER' | translate }}</a>
           </li>
-        </ul>
+        }
       </ul>
     </div>
   </div>

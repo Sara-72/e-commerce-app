@@ -1,13 +1,16 @@
 import { Component, OnInit, inject ,ChangeDetectorRef} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core'; // <-- Import TranslatePipe
 import { CartService } from '../../core/services/cart';
 import { Wishlist} from '../../core/services/wishlist'; // <-- Import WishlistService
+import { TranslationService } from '../../core/services/translation';
+import { AuthService } from '../../core/services/auth';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive],
+  imports: [CommonModule, RouterLink, RouterLinkActive,TranslatePipe],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css'
 })
@@ -15,9 +18,16 @@ export class Navbar implements OnInit {
   private readonly _cartService = inject(CartService);
   private readonly _wishlistService = inject(Wishlist); // <-- Inject WishlistService
   private readonly _cdr = inject(ChangeDetectorRef);
+  readonly _translationService = inject(TranslationService);
+  readonly _authService = inject(AuthService);
 
   countNumber: number = 0;
   wishlistCountNumber: number = 0; // <-- Wishlist count property
+
+  toggleLanguage(): void {
+    const current = this._translationService.getCurrentLang();
+    this._translationService.changeLang(current === 'en' ? 'ar' : 'en');
+  }
 
   ngOnInit(): void {
     // Initialize cart count on app load
@@ -43,5 +53,7 @@ export class Navbar implements OnInit {
         this._cdr.detectChanges();
       }
     });
+
   }
+
 }

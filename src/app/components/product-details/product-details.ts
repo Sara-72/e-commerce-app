@@ -4,11 +4,12 @@ import { ActivatedRoute } from '@angular/router';
 import { EcommerceService } from '../../core/services/ecommerce';
 import { Subscription } from 'rxjs';
 import { CartService } from '../../core/services/cart'; // <-- Import CartService
+import { TranslatePipe } from '@ngx-translate/core'; // <-- Import TranslatePipe
 
 @Component({
   selector: 'app-product-details',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './product-details.html',
   styleUrl: './product-details.css',

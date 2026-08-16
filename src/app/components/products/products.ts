@@ -1,15 +1,19 @@
 import { Component, OnInit, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { EcommerceService } from '../../core/services/ecommerce';
 import { Product } from '../../core/interfaces/product';
 import { CartService } from '../../core/services/cart'; // <-- Import CartService
 import { Wishlist } from '../../core/services/wishlist'; // <-- Import WishlistService
+import { TranslatePipe } from '@ngx-translate/core'; // <-- Import TranslatePipe
+import { SearchPipe } from '../../core/pipes/search-pipe'; // <-- Import SearchPipe
+
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule,FormsModule, RouterLink, SearchPipe ,TranslatePipe],
   templateUrl: './products.html',
   styleUrl: './products.css'
 })
@@ -23,6 +27,7 @@ export class Products implements OnInit {
   isLoading: boolean = true;
   hasError: boolean = false;
   wishlistIds: string[] = []; // <-- Holds favorite product IDs
+   text: string = ''; // <-- Holds the user's search input text
 
   ngOnInit(): void {
     this.getProducts();

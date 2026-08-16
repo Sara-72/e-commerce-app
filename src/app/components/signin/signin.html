@@ -1,5 +1,5 @@
 <section class="container my-5 w-75 mx-auto">
-  <h2 class="text-main fw-bold mb-4">Login Now</h2>
+  <h2 class="text-main fw-bold mb-4">{{ 'NAVBAR.LOGIN' | translate }}</h2>
 
   @if (errorMessage) {
     <div class="alert alert-danger py-2 mb-3">{{ errorMessage }}</div>
@@ -8,7 +8,7 @@
   <form [formGroup]="signinForm" (ngSubmit)="handleLogin()">
     <!-- Email -->
     <div class="mb-3">
-      <label for="email" class="form-label">Email:</label>
+      <label for="email" class="form-label">{{ 'AUTH.EMAIL' | translate }}</label>
       <input type="email" id="email" formControlName="email" class="form-control" />
       @if (signinForm.get('email')?.touched && signinForm.get('email')?.errors) {
         <div class="text-danger font-sm mt-1">
@@ -20,7 +20,7 @@
 
     <!-- Password -->
     <div class="mb-3">
-      <label for="password" class="form-label">Password:</label>
+      <label for="password" class="form-label">{{ 'AUTH.PASSWORD' | translate }}</label>
       <input type="password" id="password" formControlName="password" class="form-control" />
       @if (signinForm.get('password')?.touched && signinForm.get('password')?.errors) {
         <div class="text-danger font-sm mt-1">
@@ -32,7 +32,7 @@
     <div class="d-flex justify-content-between align-items-center mt-4">
       <a routerLink="/signup" class="text-muted text-decoration-none">Don't have an account? Sign Up</a>
       <button [disabled]="signinForm.invalid || isLoading" class="btn bg-main text-white">
-        @if (isLoading) { <i class="fa-solid fa-spinner fa-spin"></i> } @else { Login }
+        @if (isLoading) { <i class="fa-solid fa-spinner fa-spin"></i> } @else { {{ 'AUTH.LOGIN_BTN' | translate }} }
       </button>
     </div>
   </form>

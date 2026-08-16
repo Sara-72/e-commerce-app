@@ -1,0 +1,47 @@
+{
+  "NAVBAR": {
+    "HOME": "الرئيسية",
+    "PRODUCTS": "المنتجات",
+    "CATEGORIES": "الأقسام",
+    "BRANDS": "الماركات",
+    "CART": "العربة",
+    "WISHLIST": "المفضلة",
+    "LOGOUT": "تسجيل الخروج",
+    "LOGIN": "تسجيل الدخول",
+    "REGISTER": "حساب جديد"
+  },
+  "PRODUCTS": {
+    "SEARCH_PLACEHOLDER": "ابحث عن منتج بالإسم...",
+    "ADD_TO_CART": "أضف إلى العربة",
+    "PRICE": "ج.م",
+    "NO_PRODUCTS": "لا توجد منتجات تطابق البحث"
+  },
+  "HOME": {
+    "POPULAR_CATEGORIES": "الأقسام الأكثر شيوعاً",
+    "POPULAR_PRODUCTS": "المنتجات الأكثر مبيعاً"
+  },
+  "CART": {
+    "TITLE": "عربة التسوق",
+    "TOTAL": "الإجمالي",
+    "CLEAR": "إفرغ العربة",
+    "CHECKOUT": "إتمام الشراء",
+    "EMPTY": "عربة التسوق فارغة"
+  },
+  "AUTH": {
+    "REGISTER_TITLE": "إنشاء حساب جديد",
+    "NAME": "الاسم بالكامل",
+    "EMAIL": "البريد الإلكتروني",
+    "PASSWORD": "كلمة المرور",
+    "REPASSWORD": "تأكيد كلمة المرور",
+    "PHONE": "رقم الهاتف",
+    "REGISTER_BTN": "تسجيل الحساب",
+    "ALREADY_HAVE_ACCOUNT": "لديك حساب بالفعل؟",
+    "LOGIN_HERE": "سجل الدخول من هنا",
+    "LOGIN_TITLE": "تسجيل الدخول",
+
+    "LOGIN_BTN": "دخول",
+    "DONT_HAVE_ACCOUNT": "ليس لديك حساب؟",
+    "SIGN_UP": "إنشاء حساب"
+
+  }
+}
